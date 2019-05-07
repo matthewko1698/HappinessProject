@@ -142,6 +142,8 @@ var startone = function(){
   var axname2 = ['30k-60k Income','60k-90k Income','90k-120k Income','','','','','',
                  '30 years older','30 years younger'];
 
+  var round = d3.format('.3n');
+
   axislines.selectAll('.axname1').data(names).enter().append('text')
            .classed('axname',true)
            .attr('x',0)
@@ -178,13 +180,41 @@ var startone = function(){
            .on('mouseover',function(d){
              d3.select(this).style('fill','white').attr('stroke','hotpink');
 
+             svg.append('rect').attr('x',function(){
+               return d3.mouse(this)[0]+25;
+             })
+             .attr('y',function(){
+               return d3.mouse(this)[1]-25;
+             })
+             .attr('width',75)
+             .attr('height',45)
+             .classed('toptool',true)
+             .attr('fill',d3.interpolatePuBu(0.9))
+             .attr('rx',10)
+             .style('opacity',0);
+
+             svg.append('text').attr('x',function(){
+               return d3.mouse(this)[0]+40;
+             })
+             .attr('y',function(){
+               return d3.mouse(this)[1];
+             })
+             .text(function(){return round(d*100)+"%"})
+             .classed('toptool',true)
+             .attr('fill','white')
+             .style('opacity',0)
+             .style('font-family','Jura');
+
+             d3.selectAll('.toptool').transition().duration(500).style('opacity',1);
 
            })
            .on('mouseout',function(d){
              d3.select(this).style('fill',function(d){
                return d3.interpolateBuGn(d)
              })
-             .attr('stroke','grey')
+             .attr('stroke','grey');
+
+             d3.selectAll('.toptool').transition().duration(150).style('opacity',0).remove();
            });
 
   axislines.selectAll('.percents').data(axlabel).enter().append('text')
