@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Advent+Pro');
+@import url('https://fonts.googleapis.com/css?family=Advent+Pro|Jura');
 body{
 
 }
@@ -10,4 +10,40 @@ body{
   font-weight: 700;
   font-size: 1.3em;
   color: white;
+}
+.clicked{
+
+  fill:black;
+}
+.menutext{
+  font-family: Advent Pro;
+
+}
+.break1{
+  width:110%;
+  height:12em;
+  background-color:#6e88b2;
+  margin-left:-10px;
+  display: inline-block;
+}
+.title{
+  display: inline-block;
+  float:right;
+  /* background-color:black; */
+  width:47%;
+  height:40em;
+  vertical-align: top;
+}
+h1{
+  font-family: Jura;
+  font-size:4em;
+  color:#6e88b2;
+}
+p{
+  font-family:Jura;
+  font-size:1.5em;
+  color:#6e88b2;
+}
+.one{
+  display: inline-block;
 }
