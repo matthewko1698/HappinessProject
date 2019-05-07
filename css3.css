@@ -21,7 +21,7 @@ body{
 }
 .break1{
   width:110%;
-  height:12em;
+  /* height:12em; */
   background-color:#6e88b2;
   margin-left:-10px;
   display: inline-block;
@@ -39,6 +39,18 @@ h1{
   font-size:4em;
   color:#6e88b2;
 }
+h2{
+  font-family: Jura;
+  font-size:4em;
+  color:#ffffff;
+  text-align: center;
+}
+.break1 p{
+  font-family:Jura;
+  font-size:1.5em;
+  color:#ffffff;
+  text-align: center;
+}
 p{
   font-family:Jura;
   font-size:1.5em;
@@ -46,4 +58,10 @@ p{
 }
 .one{
   display: inline-block;
+}
+.tooltext{
+  font-family:Jura;
+  font-size:1.5em;
+  color:#6e88b2;
+  fill:#6e88b2;
 }

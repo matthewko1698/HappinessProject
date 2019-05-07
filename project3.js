@@ -177,6 +177,8 @@ var startone = function(){
            .attr('stroke','grey')
            .on('mouseover',function(d){
              d3.select(this).style('fill','white').attr('stroke','hotpink');
+
+
            })
            .on('mouseout',function(d){
              d3.select(this).style('fill',function(d){
@@ -446,20 +448,23 @@ var starttwo = function(){
 
              compareplot.selectAll('.percentline').transition().style('opacity',0).remove();
 
-             compareplot.selectAll('.percentnum').transition().style('opacity',0).remove(); 
+             compareplot.selectAll('.percentnum').transition().style('opacity',0).remove();
+
+             compareplot.selectAll('.tooltip').transition()
+                        .duration(1000).style('opacity',0).remove();
            })
            .on('mouseover',function(d){
              d3.select(this).style('cursor','pointer');
 
            });
 
-  menuPlot.append('text').attr('x',menuxscale1(0)+(menuxscale1(1)+menuxscale1(0))/2).attr('y',menuyscale(5)+(menuyscale(5)-menuyscale(4))/2)
+  menuPlot.append('text').attr('x',menuxscale1(0)+(menuxscale1(1)+menuxscale1(0))/2+7).attr('y',menuyscale(5)+(menuyscale(5)-menuyscale(4))/2)
           .text('New Individual')
           .attr('text-anchor','middle')
           .style('font-family','Advent Pro')
           .attr('fill',d3.interpolatePuBu(0.9));
 
-  menuPlot.append('text').attr('x',menuxscale1(2)+(menuxscale1(1)+menuxscale1(0))/2).attr('y',menuyscale(5)+(menuyscale(5)-menuyscale(4))/2)
+  menuPlot.append('text').attr('x',menuxscale1(2)+(menuxscale1(1)+menuxscale1(0))/2+7).attr('y',menuyscale(5)+(menuyscale(5)-menuyscale(4))/2)
           .text('Remove All')
           .attr('text-anchor','middle')
           .style('font-family','Advent Pro')
@@ -496,6 +501,10 @@ var createInd = function(individual){
 
   var happyYscale = d3.scaleLinear().domain([0,1]).range([height,0]);
 
+  var round = d3.format('.3n');
+
+  var linegen = d3.line().x(function(d){return d.x;}).y(function(d){return d.y;}).curve(d3.curveCatmullRom);
+
   compareplot.append('circle')
              .attr('cx',function(d){
                return (width-marginmenu.left)/2;
@@ -511,9 +520,120 @@ var createInd = function(individual){
                return d3.interpolateRdYlGn(prob(individual));
              })
              .style('stroke-width',1)
-             .style('stroke','black');
+             .style('stroke','black')
+             .on('mouseover',function(d){
 
-  var round = d3.format('.3n');
+               compareplot.append('path')
+                          .attr('d',linegen(
+                            [{x:(width-marginmenu.left)/2+60,y:happyYscale(1)},
+                             {x:(width-marginmenu.left)/2+50,y:happyYscale(0.98)},
+                             {x:(width-marginmenu.left)/2+35,y:happyYscale(prob(individual))-10},
+                             {x:(width-marginmenu.left)/2+20,y:happyYscale(prob(individual))},
+                             {x:(width-marginmenu.left)/2+35,y:happyYscale(prob(individual))+10},
+                             {x:(width-marginmenu.left)/2+50,y:happyYscale(0.03)},
+                             {x:(width-marginmenu.left)/2+60,y:happyYscale(0)}]))
+                          .style('stroke-width',0.75)
+                          .attr('stroke','black')
+                          .attr('fill','none')
+                          .classed('tooltip',true);
+
+               compareplot.append('text')
+                          .attr('x',function(d){
+                            return (width-marginmenu.left)/2+220;
+                          })
+                          .attr('y',happyYscale(0.88))
+                          .text(function(d){
+                            return 'Probability of Happiness: '+round(prob(individual)*100) + '%'
+                          })
+                          .classed('tooltip',true)
+                          .classed('tooltext',true)
+                          .attr('text-anchor','middle');
+
+               compareplot.append('text')
+                          .attr('x',function(d){
+                            // return (width)-(marginmenu.left)*1.75
+                            return (width-marginmenu.left)/2+220;
+
+                          })
+                          .attr('y',happyYscale(0.72))
+                          .text(function(d){
+                            if(individual.health==0){return "Health: Poor"}
+                            else if(individual.health==0.5){return "Health: Fair"}
+                            else if(individual.health==1){return "Health: Great"}
+                          })
+                          .classed('tooltip',true)
+                          .classed('tooltext',true)
+                          .attr('text-anchor','middle');
+
+               compareplot.append('text')
+                          .attr('x',function(d){
+                            // return (width)-(marginmenu.left)*1.75
+                            return (width-marginmenu.left)/2+220;
+                          })
+                          .attr('y',happyYscale(0.56))
+                          .text(function(d){
+                            if(individual.income==0){return "Income: <30k"}
+                            else if(individual.income==1){return "Income: 30k-60k"}
+                            else if(individual.income==2){return "Income: 60k-90k"}
+                            else if(individual.income==3){return "Income: 90k-120k"}
+                            else if(individual.income==4){return "Income: >120k"}
+                          })
+                          .classed('tooltip',true)
+                          .classed('tooltext',true)
+                          .attr('text-anchor','middle');
+
+               compareplot.append('text')
+                          .attr('x',function(d){
+                            // return (width)-(marginmenu.left)*1.75
+                            return (width-marginmenu.left)/2+220;
+                          })
+                          .attr('y',happyYscale(0.40))
+                          .text(function(d){
+                            if(individual.married==0){return "Married: No"}
+                            else if(individual.married==1){return "Married: Yes"}
+                          })
+                          .classed('tooltip',true)
+                          .classed('tooltext',true)
+                          .attr('text-anchor','middle');
+
+               compareplot.append('text')
+                          .attr('x',function(d){
+                            // return (width)-(marginmenu.left)*1.75
+                            return (width-marginmenu.left)/2+220;
+                          })
+                          .attr('y',happyYscale(0.24))
+                          .text(function(d){
+                            return "Hours: "+individual.hours;
+                          })
+                          .classed('tooltip',true)
+                          .classed('tooltext',true)
+                          .attr('text-anchor','middle');
+
+               compareplot.append('text')
+                          .attr('x',function(d){
+                            // return (width)-(marginmenu.left)*1.75
+                            return (width-marginmenu.left)/2+220;
+                          })
+                          .attr('y',happyYscale(0.08))
+                          .text(function(d){
+                            return "Age: "+individual.age;
+                          })
+                          .classed('tooltip',true)
+                          .classed('tooltext',true)
+                          .attr('text-anchor','middle');
+
+               compareplot.selectAll('.tooltip').style('opacity',0);
+               compareplot.selectAll('.tooltip').transition()
+                          .duration(500).style('opacity',1);
+             })
+             .on('mouseout',function(d){
+
+               compareplot.selectAll('.tooltip').transition()
+                          .duration(200).style('opacity',0).remove();
+
+             });
+
+
 
 
   compareplot.append('text')
@@ -530,8 +650,6 @@ var createInd = function(individual){
             .classed('percentnum',true)
             .style('opacity',0);
 
-
-  var linegen = d3.line().x(function(d){return d.x;}).y(function(d){return d.y;});
 
   compareplot.append('path')
              .attr('d',linegen(
