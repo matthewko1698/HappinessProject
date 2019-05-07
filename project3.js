@@ -137,7 +137,7 @@ var startone = function(){
            });
 
   var axname1 = ['Good Health','Marriage','Work 30 Hours Less','',
-                '','','','','Income > 120,000','% Increase in Happiness'];
+                '','','','','Income > 120k','% Increase in Happiness'];
 
   var axname2 = ['30k-60k Income','60k-90k Income','90k-120k Income','','','','','',
                  '30 years older','30 years younger'];
@@ -324,7 +324,7 @@ var starttwo = function(){
 
               if(ar.length==3){
                 if(d==0){return "Poor"}
-                else if(d==5){return "Average"}
+                else if(d==5){return "Fair"}
                 else if(d==10){return "Great"};
               }
               else if(ar.length==2){
@@ -539,7 +539,7 @@ var createInd = function(individual){
 
                compareplot.append('text')
                           .attr('x',function(d){
-                            return (width-marginmenu.left)/2+220;
+                            return (width-marginmenu.left)/2+230;
                           })
                           .attr('y',happyYscale(0.88))
                           .text(function(d){
