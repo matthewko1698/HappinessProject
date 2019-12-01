@@ -214,7 +214,7 @@ var startone = function(){
              })
              .attr('stroke','grey');
 
-             d3.selectAll('.toptool').transition().duration(150).style('opacity',0).remove();
+             d3.selectAll('.toptool').transition().duration(50).style('opacity',0).remove();
            });
 
   axislines.selectAll('.percents').data(axlabel).enter().append('text')
@@ -659,7 +659,7 @@ var createInd = function(individual){
              .on('mouseout',function(d){
 
                compareplot.selectAll('.tooltip').transition()
-                          .duration(200).style('opacity',0).remove();
+                          .duration(50).style('opacity',0).remove();
 
              });
 
